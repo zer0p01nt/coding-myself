@@ -4,10 +4,10 @@ export default function SearchArea() {
   return (
     <section className='search-area mb-16'>
       <article className='search-area__search font-search text-center'>
-        <h2 className='search-area__title text-[2rem] font-bold mb-2'>
+        <h2 className='search-area__title text-[2rem] font-bold mb-2 lg:text-4xl'>
           The Sucoding Blog
         </h2>
-        <p className='search-area__description text-[1.15rem] text-primary mb-4'>
+        <p className='search-area__description text-[1.15rem] text-primary mb-4 min-[320px]:text-lg lg:text-[1.35rem]'>
           A Blog About Food, Experience, and Recipes.
         </p>
         <form method='get' className='search-area__form relative'>

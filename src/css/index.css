@@ -33,6 +33,29 @@
   button {
     cursor: pointer;
   }
+
+  @media (min-width: 320px) {
+    html {
+      font-size: 14px;
+      position: relative;
+      left: calc((100vw - 100%) / 2);
+    }
+  }
+
+  @media (min-width: 420px) {
+    html {
+      font-size: 15px;
+      position: static;
+    }
+  }
+
+  @media (min-width: 640px) {
+    html {
+      font-size: 16px;
+      position: relative;
+      left: calc((100vw - 100%) / 2);
+    }
+  }
 }
 
 @tailwind utilities;

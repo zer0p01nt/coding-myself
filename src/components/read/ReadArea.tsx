@@ -7,7 +7,7 @@ export default function ReadArea() {
         <strong className='page__read-tag flex justify-center items-center text-white w-18 h-6.5 text-xs bg-primary-navy my-[0.325rem] mx-0'>
           Travel
         </strong>
-        <h2 className='page__read-title font-bold'>
+        <h2 className='page__read-title font-bold min-[320px]:text-[1.625rem] md:text-[1.825rem]'>
           My Travel Stories from the Past Year
         </h2>
         <div className='page__read-meta-group flex justify-between text-sm text-secondary'>
@@ -24,8 +24,8 @@ export default function ReadArea() {
           className='page__read-image w-full h-70 object-cover'
         />
       </section>
-      <section className='page__read-desc mt-5 text-lg/7 max-w-200 text-tertiary'>
-        <p className='mb-4'>
+      <section className='page__read-desc mt-5 text-lg/7 max-w-200 text-tertiary min-[420px]:text-base lg:text-base'>
+        <p className='mb-4 min-[420px]:mb-2'>
           Over the past year, I had the opportunity to explore new places and
           immerse myself in different cultures. From the vibrant streets of
           Europe to the serene beaches of Asia, each journey taught me something

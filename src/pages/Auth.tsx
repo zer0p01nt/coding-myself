@@ -1,6 +1,6 @@
 export default function Auth() {
   return (
-    <main className='page__main flex flex-col items-center justify-center my-12 mx-0 min-h-[calc(100vh-131px-128px-96px)]'>
+    <main className='page__main flex flex-col items-center justify-center my-12 mx-0 min-h-[calc(100vh-131px-128px-96px)] min-[320px]:min-h-[calc(100vh-114px-110px-96px)] sm:min-h-[calc(100vh-131px-128px-96px)]'>
       <article className='page-auth flex justify-center items-center'>
         <section className='page-auth__container w-full max-w-100 bg-white rounded-lg shadow-md overflow-hidden'>
           <nav className='page-auth__toggle flex bg-black'>
