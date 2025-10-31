@@ -2,20 +2,24 @@ import { dummyImage1 } from "../../assets/images/images";
 
 export default function ReadArea() {
   return (
-    <article className='page__read'>
+    <article className='w-full max-w-200'>
       <section>
-        <strong className='page__read-tag'>Travel</strong>
-        <h2 className='page__read-title'>
-          My Travel Stories from the Past Year
-        </h2>
-        <div className='page__read-meta-group'>
-          <p className='page__read-profile'>George Costanazv • Dec 16, 2024</p>
-          <button className='page__read-btn'>삭제</button>
+        <strong className='flex justify-center items-center text-white w-18 h-6.5 text-xs bg-primary-navy my-[0.325rem] mx-0'>
+          Travel
+        </strong>
+        <h2 className='font-bold'>My Travel Stories from the Past Year</h2>
+        <div className='flex justify-between text-sm text-secondary'>
+          <p className='text-sm text-secondary my-1 mx-0'>
+            George Costanazv • Dec 16, 2024
+          </p>
+          <button className='bg-transparent border-0 text-primary underline cursor-pointer'>
+            삭제
+          </button>
         </div>
-        <img src={dummyImage1} alt='' className='page__read-image' />
+        <img src={dummyImage1} alt='' className='w-full h-70 object-cover' />
       </section>
-      <section className='page__read-desc'>
-        <p>
+      <section className='mt-5 text-lg/7 max-w-200 text-tertiary'>
+        <p className='mb-4'>
           Over the past year, I had the opportunity to explore new places and
           immerse myself in different cultures. From the vibrant streets of
           Europe to the serene beaches of Asia, each journey taught me something
