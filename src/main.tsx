@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router";
 import "./css/index.css";
 import { axiosInstance } from "./api/axiosInstance";
 import { useAuthStore } from "./stores/useAuthStore";
+import { ErrorBoundary } from "react-error-boundary";
 
 const refreshUser = async () => {
   try {
@@ -26,8 +27,10 @@ if (storage?.state?.user) {
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <ErrorBoundary fallback={<p>Something went wrong</p>}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </ErrorBoundary>
   </StrictMode>
 );
