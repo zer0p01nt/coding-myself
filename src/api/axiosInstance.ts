@@ -14,3 +14,35 @@ axiosInstance.interceptors.request.use((config) => {
   }
   return config;
 });
+
+let retry = false; // 액세스 토큰 재요청이 무한 루프에 빠지는 것 방지
+
+// 액세스 토큰 재요청
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+    if (error.response?.status === 403 && !retry) {
+      retry = true;
+      try {
+        const { data, status } = await axiosInstance.post("/token");
+        if (status == 200) {
+          useAuthStore.setState({
+            user: data.user,
+            accessToken: data.accessToken,
+          });
+          retry = false;
+          originalRequest.headers[
+            "Authorization"
+          ] = `Bearer ${data.accessToken}`;
+          return axiosInstance(originalRequest);
+        } else {
+          throw new Error("토큰 업데이트 실패");
+        }
+      } catch {
+        useAuthStore.setState({ user: null, accessToken: null });
+      }
+    }
+    return Promise.reject(error);
+  }
+);
