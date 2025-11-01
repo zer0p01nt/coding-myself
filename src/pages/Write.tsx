@@ -1,11 +1,78 @@
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import { axiosInstance } from "../api/axiosInstance";
+import axios from "axios";
+
 export default function Write() {
+  const navigate = useNavigate();
+  const [title, setTitle] = useState<string>("");
+  const [category, setCategory] = useState<string>("");
+  const [thumbnail, setThumbnail] = useState<string | null>(null);
+  const [username, setUsername] = useState<string>("");
+  const [desc, setDesc] = useState<string>("");
+
+  const encodeFileToBase64 = (image: File) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(image);
+      reader.onload = (event) => {
+        const target = event.target as FileReader | null;
+        if (target && target.result) {
+          resolve(target.result);
+        } else {
+          reject(new Error("File reading failed"));
+        }
+      };
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = (event.target.files && event.target.files[0]) || null;
+    if (!file) return;
+    const convertedFile = await encodeFileToBase64(file);
+    setThumbnail(convertedFile as string);
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      if (!title || !category || !thumbnail || !desc || !username) {
+        alert("입력 값이 누락되었습니다.");
+        return;
+      }
+      const { status } = await axiosInstance.post("/posts", {
+        title,
+        category,
+        thumbnail,
+        desc,
+        username,
+      });
+      if (status === 201) {
+        alert("글이 등록되었습니다.");
+        navigate("/");
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const msg = error.response?.data?.message ?? error.message;
+        alert(msg);
+      } else if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert("알 수 없는 이유로 실패했습니다.");
+      }
+    }
+  };
+
   return (
     <main className='page__main flex flex-col items-center justify-center my-12 mx-0 min-h-[calc(100vh-131px-128px-96px)] min-[320px]:min-h-[calc(100vh-114px-110px-96px)] sm:min-h-[calc(100vh-131px-128px-96px)]'>
       <div className='page__write py-8 px-4 max-w-2xl w-full'>
         <h2 className='page__write-text mb-4 text-xl/7 text-primary-black'>
           새로운 글 작성
         </h2>
-        <form action='#'>
+        <form onSubmit={handleSubmit}>
           <div className='page__write-form grid gap-4 sm:grid-cols-2 sm:gap-6'>
             <div className='page__write-group sm:col-span-2'>
               <label
@@ -20,6 +87,8 @@ export default function Write() {
                 id='title'
                 className='page__write-input block p-2.5 rounded-lg border border-gray-300 w-full text-sm/5 text-primary-black bg-primary-white'
                 placeholder='Type product name'
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
                 required
               />
             </div>
@@ -33,6 +102,8 @@ export default function Write() {
               <select
                 id='category'
                 className='page__write-select block p-2.5 rounded-lg border border-gray-300 w-full text-sm/5 text-primary-black bg-primary-white'
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
                 required
               >
                 <option value=''>Select category</option>
@@ -54,6 +125,8 @@ export default function Write() {
                 id='writer'
                 className='page__write-input block p-2.5 rounded-lg border border-gray-300 w-full text-sm/5 text-primary-black bg-primary-white'
                 placeholder='Type product name'
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 required
               />
             </div>
@@ -77,6 +150,7 @@ export default function Write() {
                   id='user_avatar'
                   type='file'
                   accept='image/*'
+                  onChange={handleFileChange}
                   required
                 />
               </div>
@@ -92,6 +166,8 @@ export default function Write() {
                 id='description'
                 className='page__write-textarea block p-2.5 rounded-lg border border-gray-300 w-full h-60 text-sm/5 text-primary-black bg-primary-white'
                 placeholder='Your description here'
+                value={desc}
+                onChange={(e) => setDesc(e.target.value)}
                 required
               ></textarea>
             </div>
